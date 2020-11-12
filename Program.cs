@@ -6,38 +6,47 @@ using System.Threading.Tasks;
 
 namespace Hangman_Alpha{
     class Program{
-        static void Guess(char guess, string word, out string current){
+         static string Guess(char guess, string word, string current){
             bool found = false;
             for (int i = 0; i < word.Length; i++){
-                if(word[i] == guess){
-                    current[i] == guess;
+                if(word[i] == guess)
+                {
+                    current[i] = guess;
                     found = true;
                 }
+                
 			}
-            if(!found) Console.WriteLine("you fucked up");  //strike function
+            
+            if (!found) Console.WriteLine("you fucked up");  //strike function
             Console.WriteLine(word);
             Current(current);
             Console.WriteLine();
+            return current;
         }
         static void Current(string current){
-            foreach (char i in current){
+            foreach (char i in current)
+            {
                 Console.Write($" {i} ");
         	}
         }
-        static string MakeBlank(string word){
+        static string MakeBlank(string word)
+        {
             string output = "";
             for (int i = 0; i < word.Length; i++)
 			{
-                output.Concat(output, "_");
+                output.Concat(output,"_");
 			}
+            return output;
         }
-        static void Main(string[] args){
+        static void Main(string[] args)
+        {
             char input;
             string word = "apple";
             string blank = MakeBlank(word);
-            while (true){
+            while (true)
+            {
                 input = Convert.ToChar(Console.ReadLine());
-                Guess(input, word, out blank);
+                Guess(input, word, blank);
 	        }
             Console.ReadKey();
         }
