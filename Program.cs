@@ -12,7 +12,31 @@ namespace Hangman_Alpha
         static Random rnd = new Random();
         static void Main(string[] args)
         {
-            Switcheles();  
+            Jatek();  
+        }
+        
+        static void Jatek()
+        {
+            char input;
+            string word = Switcheles();
+            string blank = MakeBlank(word);
+            /*while (true)
+            {
+                input = Convert.ToChar(Console.ReadLine());
+                Guess(input, word, blank);
+            }
+           */
+            Console.WriteLine(word);
+            Console.WriteLine(blank);
+        }
+        static string MakeBlank(string word)
+        {
+            string output = "";
+            for (int i = 0; i < word.Length; i++)
+            {
+                output = string.Concat(output, "_");
+            }
+            return output;
         }
         static string Switcheles()
         {
