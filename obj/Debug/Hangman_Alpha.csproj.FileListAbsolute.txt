@@ -1,0 +1,7 @@
+C:\Users\Hujber F. Kristóf\Source\Repos\c-hangman-2020.11.12\bin\Debug\Hangman_Alpha.exe.config
+C:\Users\Hujber F. Kristóf\Source\Repos\c-hangman-2020.11.12\bin\Debug\Hangman_Alpha.exe
+C:\Users\Hujber F. Kristóf\Source\Repos\c-hangman-2020.11.12\bin\Debug\Hangman_Alpha.pdb
+C:\Users\Hujber F. Kristóf\Source\Repos\c-hangman-2020.11.12\obj\Debug\Hangman_Alpha.csprojAssemblyReference.cache
+C:\Users\Hujber F. Kristóf\Source\Repos\c-hangman-2020.11.12\obj\Debug\Hangman_Alpha.csproj.CoreCompileInputs.cache
+C:\Users\Hujber F. Kristóf\Source\Repos\c-hangman-2020.11.12\obj\Debug\Hangman_Alpha.exe
+C:\Users\Hujber F. Kristóf\Source\Repos\c-hangman-2020.11.12\obj\Debug\Hangman_Alpha.pdb
