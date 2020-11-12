@@ -10,6 +10,7 @@ namespace Hangman_Alpha
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Hello");
         }
     }
 }
