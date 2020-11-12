@@ -1,0 +1,7 @@
+D:\Programozás alkalmazások\Cloud\C#\Projects\Hangman\bin\Debug\Hangman_Alpha.exe.config
+D:\Programozás alkalmazások\Cloud\C#\Projects\Hangman\bin\Debug\Hangman_Alpha.exe
+D:\Programozás alkalmazások\Cloud\C#\Projects\Hangman\bin\Debug\Hangman_Alpha.pdb
+D:\Programozás alkalmazások\Cloud\C#\Projects\Hangman\obj\Debug\Hangman_Alpha.csprojAssemblyReference.cache
+D:\Programozás alkalmazások\Cloud\C#\Projects\Hangman\obj\Debug\Hangman_Alpha.csproj.CoreCompileInputs.cache
+D:\Programozás alkalmazások\Cloud\C#\Projects\Hangman\obj\Debug\Hangman_Alpha.exe
+D:\Programozás alkalmazások\Cloud\C#\Projects\Hangman\obj\Debug\Hangman_Alpha.pdb
