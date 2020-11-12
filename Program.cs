@@ -34,8 +34,8 @@ namespace Hangman_Alpha{
             string output = "";
             for (int i = 0; i < word.Length; i++)
 			{
-                output.Concat(output,"_");
-			}
+                output = string.Concat(output, "_");
+            }
             return output;
         }
         static void Main(string[] args)
