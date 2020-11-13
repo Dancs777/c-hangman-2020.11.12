@@ -6,41 +6,39 @@ using System.Threading.Tasks;
 
 namespace Hangman_Alpha{
     class Program{
-        static void Guess(char guess, string word, out string current){
-            bool found = false;
+        static void DisplayCurrent(char[] current){     //hot stuff
+            string display = Convert.ToString(current[0]);
+            for (int i = 1; i < current.Length; i++){
+                display = String.Concat(display, " ", Convert.ToString(current[i]));
+            }
+            Console.WriteLine($"\r{display}");
+        }
+        static bool IsWon(char[] blank){
+            int i = 0;
+            while (i<blank.Length){
+                if (blank[i] == '_') break;
+                i++;
+            }
+            if (i < blank.Length) return false;
+            return true;
+        }
+        
+        static void Guess(){
+
+        }
+        static void Blank(string word, ref char[] blank){
             for (int i = 0; i < word.Length; i++){
-                if(word[i] == guess){
-                    current[i] == guess;
-                    found = true;
-                }
-			}
-            if(!found) Console.WriteLine("you fucked up");  //strike function
-            Console.WriteLine(word);
-            Current(current);
-            Console.WriteLine();
-        }
-        static void Current(string current){
-            foreach (char i in current){
-                Console.Write($" {i} ");
-        	}
-        }
-        static string MakeBlank(string word){
-            string output = "";
-            for (int i = 0; i < word.Length; i++)
-			{
-                output.Concat(output, "_");
+                blank[i] = '_';
 			}
         }
         static void Main(string[] args){
-            char input;
             string word = "apple";
-            string blank = MakeBlank(word);
-            while (true){
-                input = Convert.ToChar(Console.ReadLine());
-                Guess(input, word, out blank);
-	        }
+            char[] blank = new char[word.Length];
+            Blank(word, ref blank);
+            char[] temp = { 'a', 'b', 'c' };
+            Console.WriteLine(IsWon(blank));
+            Console.WriteLine(IsWon(temp));
             Console.ReadKey();
         }
     }
 }
-
