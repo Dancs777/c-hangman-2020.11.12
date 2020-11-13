@@ -19,29 +19,50 @@ namespace Hangman_Alpha
         
         static void Jatek()
         {
+            szobeolvasasLetter();
             char input = 'a';
             string word = Switcheles();
             string blank = MakeBlank(word);
+            char[] üres = blank.ToCharArray();
             int nehezseg = Nehezseg();
-            input = LetterParse();
-            /*while (nehezseg>0)
+            int probalkozas = word.Length;
+            char underscore = '_';
+            bool ifFeluliras;
+            Console.WriteLine("Please give me a letter from the English Alphabet");
+            do
             {
+                ifFeluliras = false;
                 input = LetterParse();
                 for (int i = 0; i < word.Length; i++)
                 {
-                    if (input == word[i])
+                    if (char.ToLower(input) == word[i])
                     {
-
+                        üres[i] = char.ToUpper(input);
+                        ifFeluliras = true;
                     }
-                    
+                    if (underscore != üres[i])
+                    {
+                        probalkozas--;
+                    }
                 }
-            }*/
+                DisplayCurrent(üres);
+                if (probalkozas == 0) { Console.WriteLine($"Congratulations, you have won the game\nYour lives remaining:{nehezseg}"); break; }
+                else { probalkozas = word.Length; }
+                if (ifFeluliras == false) { nehezseg--; Console.WriteLine($"This is not in the word.You have {nehezseg} lives remaining\n"); }
+                else { Console.WriteLine("Your character is in the word"); }
+                if (nehezseg == 0) { Console.WriteLine($"Sorry, you have lost the game. Your word was {word}"); }
 
-            Console.WriteLine(word);
-            Console.WriteLine(blank);
-            Console.WriteLine(nehezseg);
-            Console.WriteLine(input);
-            
+
+            } while (nehezseg > 0);
+        }
+        static void DisplayCurrent(char[] current)
+        {
+            string display = Convert.ToString(current[0]);
+            for (int i = 1; i < current.Length; i++)
+            {
+                display = String.Concat(display, " ", Convert.ToString(current[i]));
+            }
+            Console.WriteLine(display);
         }
         static string MakeBlank(string word)
         {
@@ -122,31 +143,31 @@ namespace Hangman_Alpha
             return fruits[rnd.Next(0, fruits.Count())];
         }
 
-
+        //minden guess után a blanket átnézzük hogy van-e benne underscore
         // string - szo UGYANOLYAN HOSSZU masik string - megoldas underlineokkal.
         //     Ahol jó, ott átrakjuk a szo[i]-t a megoldas[i]-re
         // all.txt nem kell, az all-nál minden txt-t beolvasunk egy listába.
         // difficulties -  Rich kid 18; Casual 14; Veteran 10; Dark Souls 7;
         
-        /*static Char LetterParse()
+        static Char LetterParse()
         {
-            Console.WriteLine("Gimme Letter");
             bool ifInt;
             Char karakter;
+            bool ifLetter;
             do
             {
                 string switchszam = Console.ReadLine();
-
                 ifInt = Char.TryParse(switchszam, out karakter);
-                if (ifInt == false || !LetterCheck(karakter)) { Console.WriteLine("This is not a letter"); };
+                ifLetter = LetterCheck(karakter);
+                if (ifInt == false) { Console.WriteLine("This is not a letter"); }
+                else if (ifLetter == false) { ifInt = false; Console.WriteLine("This is not a letter"); }
                     
-            } while (!LetterCheck(karakter));
-            return karakter;
-        }*/
+            } while (ifInt==false);
+            return char.ToUpper(karakter);
+        }
         static bool LetterCheck(char karakter)
         {
             karakter = char.ToUpper(karakter);
-
             for (int i = 0; i < letters.Count; i++)
             {
                 if (karakter == letters[i])
