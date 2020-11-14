@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 /*
     TODO
+    -handling both lower- and uppercase letters
     -lives
     -word selection from file
     -stickman figure from file
