@@ -3,41 +3,70 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+/*
+    TODO
+    -lives
+    -word selection from file
+    -stickman figure from file
+*/
 
 namespace Hangman_Alpha{
     class Program{
-        static void DisplayCurrent(char[] current){     //hot stuff
+        static string word;
+        static char[] current;
+        static void DisplayCurrent(){
+            Console.Clear();
             string display = Convert.ToString(current[0]);
             for (int i = 1; i < current.Length; i++){
                 display = String.Concat(display, " ", Convert.ToString(current[i]));
             }
-            Console.WriteLine($"\r{display}");
+            Console.WriteLine($"{display}");
         }
-        static bool IsWon(char[] blank){
+        static bool IsWon(){
             int i = 0;
-            while (i<blank.Length){
-                if (blank[i] == '_') break;
+            while (i < current.Length){
+                if (current[i] == '_') break;
                 i++;
             }
-            if (i < blank.Length) return false;
+            if (i < current.Length) return false;
             return true;
         }
         
-        static void Guess(){
-
+        static bool Guess(char guess){
+            
+            bool found = false;
+            for(int i = 0; i < word.Length; i++){
+                if(word[i] == guess){
+                    current[i] = guess;
+                    found = true;
+                }
+            }
+            DisplayCurrent();
+            if (!found){
+                //lives--;
+            }
+            return IsWon();
         }
-        static void Blank(string word, ref char[] blank){
+        static void Blank(ref char[] blank){
             for (int i = 0; i < word.Length; i++){
                 blank[i] = '_';
 			}
         }
         static void Main(string[] args){
-            string word = "apple";
-            char[] blank = new char[word.Length];
-            Blank(word, ref blank);
-            char[] temp = { 'a', 'b', 'c' };
-            Console.WriteLine(IsWon(blank));
-            Console.WriteLine(IsWon(temp));
+            word = "apple";
+            current = new char[word.Length];
+            Blank(ref current);
+            char input;
+            DisplayCurrent();
+            do
+            {
+                input = Convert.ToChar(Console.ReadLine());
+            } while (!Guess(input));
+            //Console.WriteLine(word);
+            //DisplayCurrent();
+            //char[] temp = { 'a', 'b', 'c' };
+            //Console.WriteLine(IsWon(current));
+            //Console.WriteLine(IsWon(temp));
             Console.ReadKey();
         }
     }
