@@ -81,15 +81,15 @@ namespace Hangman_Alpha{
             return false;
         }
         static void ReadCharacterCollection(){
-            StreamReader characters = new StreamReader("English alphabet.txt");
-            while (!characters.EndOfStream){
+            StreamReader sr = new StreamReader("English alphabet.txt");
+            while (!sr.EndOfStream){
                 try{
-                    characterCollection.Add(Char.ToUpper(char.Parse(characters.ReadLine())));
+                    characterCollection.Add(Char.ToUpper(char.Parse(sr.ReadLine())));
                 }catch(Exception e){
                     Console.WriteLine(e.Message);
                 }
             }
-            characters.Close();
+            sr.Close();
         }
         static void Main(string[] args){
             ReadCharacterCollection();
