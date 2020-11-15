@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using System.IO;
 /*
     TODO
-    - handling both lower- and uppercase letters DONE
-    - lives  DONE
-    - exception handling for the guess
+    - exception handlig for already guessed characters (player cannot enter the same character more than once)
     - word selection from file
+    - difficulties
     - stickman figure from file
 */
 
@@ -18,6 +17,7 @@ namespace Hangman_Alpha{
         static string word;
         static char[] current;
         static int lives;
+        static List<char> characterCollection = new List<char>();
         static void DisplayCurrent(){
             Console.Clear();
             string display = Convert.ToString(current[0]);
@@ -61,19 +61,38 @@ namespace Hangman_Alpha{
 			}
         }
         static char ReadGuess(){
-            
-
             char converted;
             bool isLegal = Char.TryParse(Console.ReadLine(), out converted);
-            while(!isLegal){
+            converted = Char.ToUpper(converted);
+            while(!isLegal || !IsInCollection(converted)){
                 DisplayCurrent();
                 Console.WriteLine("Not a legal character. Please, try again.");
                 isLegal = Char.TryParse(Console.ReadLine(), out converted);
+                converted = Char.ToUpper(converted);
             }
-            return Char.ToUpper(converted);
+            return converted;
+        }
+        static bool IsInCollection(char input){
+            int i = 0;
+            while(i < characterCollection.Count && characterCollection[i] != input){
+                i++;
+            }
+            if (i < characterCollection.Count) return true;
+            return false;
+        }
+        static void ReadCharacterCollection(){
+            StreamReader characters = new StreamReader("English alphabet.txt");
+            while (!characters.EndOfStream){
+                try{
+                    characterCollection.Add(Char.ToUpper(char.Parse(characters.ReadLine())));
+                }catch(Exception e){
+                    Console.WriteLine(e.Message);
+                }
+            }
+            characters.Close();
         }
         static void Main(string[] args){
-            StreamReader characters = new StreamReader("English aplhabet");
+            ReadCharacterCollection();
             word = "apple".ToUpper();
             current = new char[word.Length];
             Blank(ref current);
