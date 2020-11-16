@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 /*
     TODO
-    - exception handlig for already guessed characters (player cannot enter the same character more than once)
     - word selection from file
     - difficulties
-    - stickman figure from file
 */
 
 namespace Hangman_Alpha{
@@ -17,6 +15,7 @@ namespace Hangman_Alpha{
         static string word;
         static char[] current;
         static int lives;
+        static List<char> alreadyGuessed = new List<char>();
         static List<char> characterCollection = new List<char>();
         static void DisplayCurrent(){
             Console.Clear();
@@ -25,7 +24,22 @@ namespace Hangman_Alpha{
                 display = String.Concat(display, " ", Convert.ToString(current[i]));
             }
             Console.WriteLine($"{display}");
-            Console.WriteLine($"Lives remaining: {lives}");
+            Gibbet();
+            Console.Write("Already guessed:");
+            for (int i = 0; i < alreadyGuessed.Count; i++){
+                Console.Write($" {alreadyGuessed[i]} ");
+            }
+            Console.WriteLine($"\nLives remaining: {lives}");
+        }
+        static void Gibbet(){
+            Console.WriteLine();
+            string filename = lives + "lives.txt";
+            StreamReader sr = new StreamReader(filename);
+            while (!sr.EndOfStream){
+                Console.WriteLine(sr.ReadLine());
+            }
+            sr.Close();
+            Console.WriteLine();
         }
         static bool IsWon(){
             int i = 0;
@@ -60,16 +74,23 @@ namespace Hangman_Alpha{
                 blank[i] = '_';
 			}
         }
+        static bool isNewGuess(char input){
+            for (int i = 0; i < alreadyGuessed.Count; i++){
+                if (input == alreadyGuessed[i]) return false;
+            }
+            return true;
+        }
         static char ReadGuess(){
             char converted;
             bool isLegal = Char.TryParse(Console.ReadLine(), out converted);
             converted = Char.ToUpper(converted);
-            while(!isLegal || !IsInCollection(converted)){
+            while(!isLegal || !IsInCollection(converted) || !isNewGuess(converted)){
                 DisplayCurrent();
                 Console.WriteLine("Not a legal character. Please, try again.");
                 isLegal = Char.TryParse(Console.ReadLine(), out converted);
                 converted = Char.ToUpper(converted);
             }
+            alreadyGuessed.Add(converted);
             return converted;
         }
         static bool IsInCollection(char input){
@@ -96,7 +117,7 @@ namespace Hangman_Alpha{
             word = "apple".ToUpper();
             current = new char[word.Length];
             Blank(ref current);
-            lives = 10;
+            lives = 11;
             char input;
             DisplayCurrent();
             do{
