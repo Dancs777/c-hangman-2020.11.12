@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,6 @@ namespace Hangman_Alpha
         {
             Jatek();
         }
-        
         static void Jatek()
         {
             szobeolvasasLetter();
@@ -31,8 +31,11 @@ namespace Hangman_Alpha
             Console.WriteLine("Please give me a letter from the English Alphabet");
             do
             {
+                bennevan = false;
                 ifFeluliras = false;
                 input = LetterParse();
+                Console.Clear();
+                DisplayUsedCharacters(input);
                 for (int i = 0; i < word.Length; i++)
                 {
                     if (char.ToLower(input) == word[i])
@@ -40,18 +43,19 @@ namespace Hangman_Alpha
                         üres[i] = char.ToUpper(input);
                         ifFeluliras = true;
                     }
-                    if (underscore != üres[i])
+                    if (underscore != üres[i]&&bennevan == false)
                     {
                         probalkozas--;
                     }
                 }
                 DisplayCurrent(üres);
+                if (bennevan == true) { Console.WriteLine("This character was tried before, therefore yet failed. "); }
                 if (probalkozas == 0) { Console.WriteLine($"Congratulations, you have won the game\nYour lives remaining:{nehezseg}"); break; }
                 else { probalkozas = word.Length; }
-                if (ifFeluliras == false) { nehezseg--; Console.WriteLine($"This is not in the word.You have {nehezseg} lives remaining\n"); }
-                else { Console.WriteLine("Your character is in the word"); }
+                if (ifFeluliras == false) { nehezseg--; Console.WriteLine($"This is letter is not included in the word.You have {nehezseg} lives remaining\n"); }
+                else { Console.WriteLine($"Your character is in the word. You have {nehezseg} lives remaining"); }
                 if (nehezseg == 0) { Console.WriteLine($"Sorry, you have lost the game. Your word was {word}"); }
-
+               
 
             } while (nehezseg > 0);
         }
@@ -63,6 +67,22 @@ namespace Hangman_Alpha
                 display = String.Concat(display, " ", Convert.ToString(current[i]));
             }
             Console.WriteLine(display);
+        }
+        static List<char> alreadyUsedCharacters = new List<char>();
+        static bool bennevan;
+        static void DisplayUsedCharacters(char input)
+        {
+            alreadyUsedCharacters.Add(input);
+            Console.WriteLine($"Already used characters:");
+            for (int i = 0; i < alreadyUsedCharacters.Count - 1; i++)
+            {
+                Console.Write($"{alreadyUsedCharacters[i]} ");
+                if (alreadyUsedCharacters[i] == input)
+                {
+                    bennevan = true;
+                }
+            }
+            Console.WriteLine();
         }
         static string MakeBlank(string word)
         {
@@ -97,7 +117,7 @@ namespace Hangman_Alpha
         static int Nehezseg()
         {
             
-            Console.WriteLine("Which difficulty you would like to play at?\n\t1:Rich kid(18 try)\n\t2:Casual(14 try)\n\t3:Veteran(10 try)\n\t4:Dark Souls(7 try)");
+            Console.WriteLine("Which difficulty you would like to play at?\n\t1:Rich kid(13 try)\n\t2:Casual(10 try)\n\t3:Veteran(7 try)\n\t4:Dark Souls(4 try)");
             int szam = IntParse();
             int visszaaadSzam = 0;
             bool IfSzam = true;
@@ -108,10 +128,10 @@ namespace Hangman_Alpha
                 switch (szam)
                 {
                     case 0: break;
-                    case 1: visszaaadSzam = 18;  IfSzam = true; break;
-                    case 2: visszaaadSzam = 14 ; IfSzam = true; break;
-                    case 3: visszaaadSzam = 10 ; IfSzam = true; break;
-                    case 4: visszaaadSzam = 7 ;  IfSzam = true; break;
+                    case 1: visszaaadSzam = 13;  IfSzam = true; break;
+                    case 2: visszaaadSzam = 10 ; IfSzam = true; break;
+                    case 3: visszaaadSzam = 7 ; IfSzam = true; break;
+                    case 4: visszaaadSzam = 4 ;  IfSzam = true; break;
                     default: Console.WriteLine("This is not a difficulty"); IfSzam = false; break;
                 }
 
@@ -147,7 +167,7 @@ namespace Hangman_Alpha
         // string - szo UGYANOLYAN HOSSZU masik string - megoldas underlineokkal.
         //     Ahol jó, ott átrakjuk a szo[i]-t a megoldas[i]-re
         // all.txt nem kell, az all-nál minden txt-t beolvasunk egy listába.
-        // difficulties -  Rich kid 18; Casual 14; Veteran 10; Dark Souls 7;
+        // difficulties -  Rich kid 18; Casual 14; Veteran 10; Dark Souls 7; - turns out those are too much so 13/10/7/4
         
         static Char LetterParse()
         {
@@ -187,7 +207,7 @@ namespace Hangman_Alpha
                 string switchszam = Console.ReadLine();
 
                 ifInt = int.TryParse(switchszam, out szam1);
-                if (ifInt == false) { Console.WriteLine("Ez nem egy szám"); };
+                if (ifInt == false) { Console.WriteLine("This is not a number"); };
 
             } while (ifInt == false);
             return szam1;
