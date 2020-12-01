@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Hangman_Alpha
         static Random rnd = new Random();
         static void Main(string[] args)
         {
-            Jatek();
+            Jatek(); // somehow i made it not work. YEA
         }
         static void Jatek()
         {
@@ -59,6 +60,19 @@ namespace Hangman_Alpha
 
             } while (nehezseg > 0);
         }
+        /*
+         * 
+        static bool isNew(char input)
+        {
+            for (int i = 0; i < alreadyUsedCharacters.Count; i++)
+            {
+                if (input==alreadyUsedCharacters[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }*/
         static void DisplayCurrent(char[] current)
         {
             string display = Convert.ToString(current[0]);
@@ -72,7 +86,6 @@ namespace Hangman_Alpha
         static bool bennevan;
         static void DisplayUsedCharacters(char input)
         {
-            alreadyUsedCharacters.Add(input);
             Console.Write($"Already used characters:");
             for (int i = 0; i < alreadyUsedCharacters.Count - 1; i++)
             {
@@ -80,6 +93,7 @@ namespace Hangman_Alpha
                 if (alreadyUsedCharacters[i] == input)
                 {
                     bennevan = true;
+                    alreadyUsedCharacters.Add(input);
                 }
             }
             Console.WriteLine();
