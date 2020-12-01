@@ -73,7 +73,7 @@ namespace Hangman_Alpha
         static void DisplayUsedCharacters(char input)
         {
             alreadyUsedCharacters.Add(input);
-            Console.WriteLine($"Already used characters:");
+            Console.Write($"Already used characters:");
             for (int i = 0; i < alreadyUsedCharacters.Count - 1; i++)
             {
                 Console.Write($"{alreadyUsedCharacters[i]} ");
